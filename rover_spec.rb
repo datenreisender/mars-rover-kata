@@ -7,9 +7,9 @@ class Rover
   def move(moves)
     moves.each_char do |c|
       case c
-      when 'f' then @position[@direction] += 1
+      when 'f' then @position[@direction % 2] += (@direction < 2 ? 1 : -1)
       when 'b' then @position[@direction] -= 1
-      when 'r' then @direction += 1
+      when 'r' then @direction = (@direction + 1) % 4
       when 'l' then @direction -= 1
       end
     end
@@ -35,5 +35,9 @@ describe Rover do
   it 'can move left and right' do
     rover = Rover.new(1,1,:north).move('rflf')
     expect(rover.position).to eq [2,2]
+  end
+
+  it 'can move in every direction' do
+    expect(Rover.new(1,1,:north).move('rfrfrfrf').position).to eq [1,1]
   end
 end
