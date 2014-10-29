@@ -4,7 +4,11 @@ class Rover
   end
 
   def move(moves)
-    @position = [2,2]
+    @position[0] += 1 #forward
+    @position[0] += 1 #forward
+    # right
+    @position[1] += 1 #forward
+    @position[1] += 1 #forward
     self
   end
 
