@@ -1,15 +1,14 @@
 class Rover
   def initialize(x, y, heading)
     @position = [0,0]
+    @direction = 0
   end
 
   def move(moves)
-    'ff'.each_char do |c|
-      @position[0] += 1 if c == 'f'
+    'ffrff'.each_char do |c|
+      @position[@direction] += 1  if c == 'f'
+      @direction = 1              if c == 'r'
     end
-    # right
-    @position[1] += 1 #forward
-    @position[1] += 1 #forward
     self
   end
 
