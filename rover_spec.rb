@@ -9,7 +9,8 @@ class Rover
       case c
       when 'f' then @position[@direction] += 1
       when 'b' then @position[@direction] -= 1
-      when 'r' then @direction = 1
+      when 'r' then @direction += 1
+      when 'l' then @direction -= 1
       end
     end
     self
@@ -29,5 +30,10 @@ describe Rover do
   it 'can move backward' do
     rover = Rover.new(1,1,:north).move('b')
     expect(rover.position).to eq [0,1]
+  end
+
+  it 'can move left and right' do
+    rover = Rover.new(1,1,:north).move('rflf')
+    expect(rover.position).to eq [2,2]
   end
 end
