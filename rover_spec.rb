@@ -4,8 +4,9 @@ class Rover
   end
 
   def move(moves)
-    @position[0] += 1 #forward
-    @position[0] += 1 #forward
+    'ff'.each_char do |c|
+      @position[0] += 1 if c == 'f'
+    end
     # right
     @position[1] += 1 #forward
     @position[1] += 1 #forward
