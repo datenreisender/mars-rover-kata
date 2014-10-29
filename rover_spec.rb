@@ -5,9 +5,11 @@ class Rover
   end
 
   def move(moves)
-    'ffrff'.each_char do |c|
-      @position[@direction] += 1  if c == 'f'
-      @direction = 1              if c == 'r'
+    moves.each_char do |c|
+      case c
+      when 'f' then @position[@direction] += 1
+      when 'r' then @direction = 1
+      end
     end
     self
   end
