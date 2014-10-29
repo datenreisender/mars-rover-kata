@@ -1,6 +1,6 @@
 class Rover
   def initialize(x, y, heading)
-    @position = [0,0]
+    @position = [x, y]
     @direction = 0
   end
 
@@ -8,6 +8,7 @@ class Rover
     moves.each_char do |c|
       case c
       when 'f' then @position[@direction] += 1
+      when 'b' then @position[@direction] -= 1
       when 'r' then @direction = 1
       end
     end
@@ -23,5 +24,10 @@ describe Rover do
   it 'can move around' do
     rover = Rover.new(0,0,:north).move('ffrff')
     expect(rover.position).to eq [2,2]
+  end
+
+  it 'can move backward' do
+    rover = Rover.new(1,1,:north).move('b')
+    expect(rover.position).to eq [0,1]
   end
 end
