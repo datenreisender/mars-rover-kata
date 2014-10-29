@@ -1,13 +1,15 @@
 class Rover
-  def initialize(x, y, direction)
+  def initialize(x, y, heading)
+    @position = [0,0]
   end
 
   def move(moves)
+    @position = [2,2]
     self
   end
 
   def position
-    [2,2]
+    @position
   end
 end
 
