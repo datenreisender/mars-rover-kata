@@ -21,4 +21,11 @@ describe Rover do
     expect(@rover.move('rfrfrfrf').position).to eq [1,1]
     expect(@rover.move('blblblbl').position).to eq [1,1]
   end
+
+  it 'can start off in every direction' do
+    expect(Rover.new(1,1,:north).move('f').position).to eq [2,1]
+    expect(Rover.new(1,1,:east ).move('f').position).to eq [1,2]
+    expect(Rover.new(1,1,:south).move('f').position).to eq [0,1]
+    expect(Rover.new(1,1,:west ).move('f').position).to eq [1,0]
+  end
 end

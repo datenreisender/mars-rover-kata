@@ -1,4 +1,8 @@
 class Direction
+  def self.of(heading)
+    self.new(%i(north east south west).index(heading))
+  end
+
   def initialize(value = 0)
     @value = value
     freeze
@@ -22,7 +26,7 @@ class Rover
 
   def initialize(x, y, heading)
     @position = [x, y]
-    @direction = Direction.new
+    @direction = Direction.of(heading)
   end
 
   def roll(fields)
