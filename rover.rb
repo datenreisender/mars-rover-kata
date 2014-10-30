@@ -9,7 +9,7 @@ class Direction
   end
 
   def turn(angle)
-    Direction.new((@value + angle + 4) % 4)
+    Direction.new((@value + angle) % 4)
   end
 
   def roll_dimension
@@ -24,13 +24,15 @@ end
 class Rover
   attr_reader :position
 
-  def initialize(x, y, heading)
+  def initialize(x, y, heading, planet_x, planet_y)
     @position = [x, y]
+    @planet_size = [planet_x, planet_y]
     @direction = Direction.of(heading)
   end
 
   def roll(fields)
-    @position[@direction.roll_dimension] += @direction.roll_sign * fields
+    @position[@direction.roll_dimension] += (@direction.roll_sign * fields)
+    @position[@direction.roll_dimension] %= @planet_size[@direction.roll_dimension]
   end
 
   def move(moves)
