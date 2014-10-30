@@ -21,29 +21,42 @@ class Direction
   end
 end
 
-class Rover
-  attr_reader :position
+class Position
+  attr_reader :current
 
-  def initialize(x, y, heading, planet_x, planet_y)
-    @position = [x, y]
-    @planet_size = [planet_x, planet_y]
-    @direction = Direction.of(heading)
+  def initialize(current, size)
+    @current = current
+    @size = size
+    freeze
   end
 
-  def roll(fields)
-    @position[@direction.roll_dimension] += (@direction.roll_sign * fields)
-    @position[@direction.roll_dimension] %= @planet_size[@direction.roll_dimension]
+  def roll(fields, direction)
+    new_pos = @current.dup
+    new_pos[direction.roll_dimension] += (direction.roll_sign * fields)
+    new_pos[direction.roll_dimension] %= @size[direction.roll_dimension]
+    Position.new(new_pos, @size)
+  end
+end
+
+class Rover
+  def initialize(x, y, heading, planet_x, planet_y)
+    @position = Position.new([x,y], [planet_x, planet_y])
+    @direction = Direction.of(heading)
   end
 
   def move(moves)
     moves.each_char do |c|
       case c
-      when 'f' then roll(1)
-      when 'b' then roll(-1)
+      when 'f' then @position = @position.roll(1, @direction)
+      when 'b' then @position = @position.roll(-1, @direction)
       when 'r' then @direction = @direction.turn(1)
       when 'l' then @direction = @direction.turn(-1)
       end
     end
     self
+  end
+
+  def position
+    @position.current
   end
 end
