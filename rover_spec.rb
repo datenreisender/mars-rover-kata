@@ -35,4 +35,11 @@ describe Rover do
     expect(Rover.new([4,2], :east, Planet.new(5,3)).move('f').position).to eq [4,0]
     expect(Rover.new([0,0], :west, Planet.new(5,3)).move('f').position).to eq [0,2]
   end
+
+  it 'stops in front of obstacles' do
+    planet = Planet.new(5,5, [2,1])
+    rover = Rover.new([1,1], :north, planet)
+
+    expect(rover.move('f').position).to eq [1,1]
+  end
 end

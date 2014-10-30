@@ -34,16 +34,26 @@ class Position
     new_pos = @current.dup
     new_pos[direction.roll_dimension] += (direction.roll_sign * fields)
     new_pos[direction.roll_dimension] %= @planet.size[direction.roll_dimension]
-    Position.new(new_pos, @planet)
+
+    if @planet.obstacle_on?(new_pos)
+      self
+    else
+      Position.new(new_pos, @planet)
+    end
   end
 end
 
 class Planet
   attr_reader :size
 
-  def initialize(size_x, size_y)
+  def initialize(size_x, size_y, *obstacles)
     @size = [size_x, size_y]
+    @obstacles = obstacles
     freeze
+  end
+
+  def obstacle_on?(pos)
+    @obstacles.include?(pos)
   end
 end
 
