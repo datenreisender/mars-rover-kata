@@ -4,13 +4,17 @@ class Rover
     @direction = 0
   end
 
+  def turn(angle)
+    @direction = (@direction + angle + 4) % 4
+  end
+
   def move(moves)
     moves.each_char do |c|
       case c
       when 'f' then @position[@direction % 2] += @direction < 2 ? 1 : -1
       when 'b' then @position[@direction % 2] -= @direction < 2 ? 1 : -1
-      when 'r' then @direction = (@direction + 1) % 4
-      when 'l' then @direction = (@direction + 3) % 4
+      when 'r' then turn(1)
+      when 'l' then turn(-1)
       end
     end
     self
