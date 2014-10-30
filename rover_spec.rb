@@ -42,4 +42,12 @@ describe Rover do
 
     expect(rover.move('f').position).to eq [1,1]
   end
+
+  it 'knows when its movement was stopped by an obstacles' do
+    planet = Planet.new(5,5, [2,1])
+    rover = Rover.new([1,1], :north, planet)
+
+    expect(rover.stopped_by_obstacle?).to be_falsy
+    expect(rover.move('f').stopped_by_obstacle?).to be_truthy
+  end
 end

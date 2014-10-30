@@ -36,9 +36,9 @@ class Position
     new_pos[direction.roll_dimension] %= @planet.size[direction.roll_dimension]
 
     if @planet.obstacle_on?(new_pos)
-      self
+      [true, self]
     else
-      Position.new(new_pos, @planet)
+      [false, Position.new(new_pos, @planet)]
     end
   end
 end
@@ -61,13 +61,14 @@ class Rover
   def initialize(pos, heading, planet)
     @position = Position.new(pos, planet)
     @direction = Direction.of(heading)
+    @stopped_by_obstacle = false
   end
 
   def move(moves)
     moves.each_char do |c|
       case c
-      when 'f' then @position = @position.roll(1, @direction)
-      when 'b' then @position = @position.roll(-1, @direction)
+      when 'f' then @stopped_by_obstacle, @position = @position.roll(1, @direction)
+      when 'b' then @stopped_by_obstacle, @position = @position.roll(-1, @direction)
       when 'r' then @direction = @direction.turn(1)
       when 'l' then @direction = @direction.turn(-1)
       end
@@ -77,5 +78,9 @@ class Rover
 
   def position
     @position.current
+  end
+
+  def stopped_by_obstacle?
+    @stopped_by_obstacle
   end
 end
