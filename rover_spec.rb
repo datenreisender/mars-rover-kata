@@ -4,6 +4,10 @@ class Rover
     @direction = 0
   end
 
+  def roll(fields)
+    @position[@direction % 2] += (@direction < 2 ? 1 : -1) * fields
+  end
+
   def turn(angle)
     @direction = (@direction + angle + 4) % 4
   end
@@ -11,8 +15,8 @@ class Rover
   def move(moves)
     moves.each_char do |c|
       case c
-      when 'f' then @position[@direction % 2] += @direction < 2 ? 1 : -1
-      when 'b' then @position[@direction % 2] -= @direction < 2 ? 1 : -1
+      when 'f' then roll(1)
+      when 'b' then roll(-1)
       when 'r' then turn(1)
       when 'l' then turn(-1)
       end
