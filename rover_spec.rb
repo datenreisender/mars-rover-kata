@@ -1,10 +1,11 @@
 class Direction
-  def initialize
-    @value = 0
+  def initialize(value = 0)
+    @value = value
+    freeze
   end
 
   def turn(angle)
-    @value = (@value + angle + 4) % 4
+    Direction.new((@value + angle + 4) % 4)
   end
 
   def roll_dimension
@@ -33,8 +34,8 @@ class Rover
       case c
       when 'f' then roll(1)
       when 'b' then roll(-1)
-      when 'r' then @direction.turn(1)
-      when 'l' then @direction.turn(-1)
+      when 'r' then @direction = @direction.turn(1)
+      when 'l' then @direction = @direction.turn(-1)
       end
     end
     self
