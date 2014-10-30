@@ -24,23 +24,32 @@ end
 class Position
   attr_reader :current
 
-  def initialize(current, size)
+  def initialize(current, planet)
     @current = current
-    @size = size
+    @planet = planet
     freeze
   end
 
   def roll(fields, direction)
     new_pos = @current.dup
     new_pos[direction.roll_dimension] += (direction.roll_sign * fields)
-    new_pos[direction.roll_dimension] %= @size[direction.roll_dimension]
-    Position.new(new_pos, @size)
+    new_pos[direction.roll_dimension] %= @planet.size[direction.roll_dimension]
+    Position.new(new_pos, @planet)
+  end
+end
+
+class Planet
+  attr_reader :size
+
+  def initialize(size_x, size_y)
+    @size = [size_x, size_y]
+    freeze
   end
 end
 
 class Rover
-  def initialize(pos, heading, size)
-    @position = Position.new(pos, size)
+  def initialize(pos, heading, planet)
+    @position = Position.new(pos, planet)
     @direction = Direction.of(heading)
   end
 
