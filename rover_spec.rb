@@ -1,17 +1,25 @@
+class Direction
+  attr_reader :value
+
+  def initialize
+    @value = 0
+  end
+
+  def turn(angle)
+    @value = (@value + angle + 4) % 4
+  end
+end
+
 class Rover
   attr_reader :position
 
   def initialize(x, y, heading)
     @position = [x, y]
-    @direction = 0
+    @direction = Direction.new
   end
 
   def roll(fields)
-    @position[@direction % 2] += (@direction < 2 ? 1 : -1) * fields
-  end
-
-  def turn(angle)
-    @direction = (@direction + angle + 4) % 4
+    @position[@direction.value % 2] += (@direction.value < 2 ? 1 : -1) * fields
   end
 
   def move(moves)
@@ -19,8 +27,8 @@ class Rover
       case c
       when 'f' then roll(1)
       when 'b' then roll(-1)
-      when 'r' then turn(1)
-      when 'l' then turn(-1)
+      when 'r' then @direction.turn(1)
+      when 'l' then @direction.turn(-1)
       end
     end
     self
