@@ -1,4 +1,6 @@
 class Rover
+  attr_reader :position
+
   def initialize(x, y, heading)
     @position = [x, y]
     @direction = 0
@@ -22,10 +24,6 @@ class Rover
       end
     end
     self
-  end
-
-  def position
-    @position
   end
 end
 
