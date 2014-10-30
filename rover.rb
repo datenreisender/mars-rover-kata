@@ -39,8 +39,8 @@ class Position
 end
 
 class Rover
-  def initialize(x, y, heading, planet_x, planet_y)
-    @position = Position.new([x,y], [planet_x, planet_y])
+  def initialize(pos, heading, size)
+    @position = Position.new(pos, size)
     @direction = Direction.of(heading)
   end
 
