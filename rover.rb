@@ -72,6 +72,8 @@ class Rover
       when 'r' then @direction = @direction.turn(1)
       when 'l' then @direction = @direction.turn(-1)
       end
+
+      break if @stopped_by_obstacle
     end
     self
   end

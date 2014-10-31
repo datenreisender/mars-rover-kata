@@ -50,4 +50,13 @@ describe Rover do
     expect(rover.stopped_by_obstacle?).to be_falsy
     expect(rover.move('f').stopped_by_obstacle?).to be_truthy
   end
+
+  it 'interrupts the movement when its movement was stopped by an obstacles' do
+    planet = Planet.new(5,5, [2,1])
+    rover = Rover.new([1,1], :north, planet)
+
+    rover.move('frf')
+    expect(rover.stopped_by_obstacle?).to be_truthy
+    expect(rover.position).to eq [1,1]
+  end
 end
